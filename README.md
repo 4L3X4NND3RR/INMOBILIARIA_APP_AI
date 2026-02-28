@@ -37,6 +37,8 @@ User query (natural language)
 
 ## Quick start
 
+**Video tutorial:** [Watch how to clone and run the project](https://drive.google.com/drive/folders/1Pvie4C7NmMqexVWW92vgrFkMwnDnRJwi)
+
 ### 1. Clone and configure
 
 ```bash
