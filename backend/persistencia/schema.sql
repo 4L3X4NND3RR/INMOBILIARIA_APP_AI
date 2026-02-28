@@ -1,0 +1,2 @@
+-- Schema for propiedades database - to be implemented
+-- Table: propiedades (id, titulo, descripcion, tipo, precio, habitaciones, banos, area_m2, ubicacion, fecha_publicacion)

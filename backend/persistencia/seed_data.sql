@@ -1,0 +1,1 @@
+-- Seed data: 15-20 sample properties - to be implemented
