@@ -80,22 +80,31 @@ This starts:
 - **Backend** on port `8000`
 - **Frontend** on port `5173` (served by nginx in the container)
 
-Wait for MySQL to be healthy (about 30s on first run). Then open:
+Wait for MySQL to be healthy (about 30s on first run).
 
-- **App**: http://localhost:5173  
-- **API docs**: http://localhost:8000/docs  
+### 3. Run the SQL scripts (very important — first run)
 
-### 3. Database schema and seed data (first run)
+**Before using the app, you must run the SQL scripts in this exact order.** The backend will not work correctly without the schema, seed data, and app user. **You must use the MySQL root user** to run these scripts (they create the database objects and application user).
 
-If the app expects an existing schema and data, run the SQL scripts once (e.g. from the host, or exec into the MySQL container):
+From the project root, run:
 
 ```bash
-# Example: run schema and seed (paths may vary)
+# 1. Create tables (schema)
 docker exec -i inmobiliaria-mysql mysql -u root -p"$MYSQL_ROOT_PASSWORD" inmobiliaria < backend/persistencia/schema.sql
+
+# 2. Load seed data
 docker exec -i inmobiliaria-mysql mysql -u root -p"$MYSQL_ROOT_PASSWORD" inmobiliaria < backend/persistencia/seed_data.sql
+
+# 3. Create the application user (used by the backend)
+docker exec -i inmobiliaria-mysql mysql -u root -p"$MYSQL_ROOT_PASSWORD" < backend/persistencia/create_app_user.sql
 ```
 
-Use the same `MYSQL_ROOT_PASSWORD` as in your `.env`.
+Use the same `MYSQL_ROOT_PASSWORD` as in your `.env`. On Windows (PowerShell), you may need to pass the password differently or run the commands from Git Bash.
+
+Then open:
+
+- **App**: http://localhost:5173  
+- **API docs**: http://localhost:8000/docs
 
 ## Project structure
 
@@ -111,7 +120,8 @@ REST_API_INMOBILIARIA/
 │   │   └── models.py         # SQLAlchemy + Pydantic models
 │   ├── persistencia/
 │   │   ├── schema.sql
-│   │   └── seed_data.sql
+│   │   ├── seed_data.sql
+│   │   └── create_app_user.sql
 │   ├── Dockerfile
 │   └── requirements.txt
 ├── frontend/                 # Vue 3 + Vite
@@ -157,7 +167,7 @@ Response includes `results`, `sql_query`, and `count`.
 - **Backend**: `cd backend && pip install -r requirements.txt && uvicorn app.main:app --reload --port 8000`  
   Set `MYSQL_HOST=localhost`, `OLLAMA_URL=http://localhost:11434` (and other vars) in the environment or `.env`.
 - **Frontend**: `cd frontend && npm install && npm run dev` (and set `VITE_API_URL` to the backend URL).
-- **MySQL**: Run MySQL 8 locally and apply `schema.sql` and `seed_data.sql`.
+- **MySQL**: Run MySQL 8 locally and apply `schema.sql`, `seed_data.sql`, and `create_app_user.sql` in that order.
 
 ## Troubleshooting
 
@@ -173,7 +183,7 @@ Response includes `results`, `sql_query`, and `count`.
 ### Database connection errors
 
 - Ensure MySQL is healthy: `docker compose ps` and check the `mysql` service.
-- Run schema/seed if the `propiedades` table or data is missing (see “Database schema and seed data” above).
+- Run the SQL scripts in order (step 3 in Quick start): `schema.sql` → `seed_data.sql` → `create_app_user.sql`.
 
 ### CORS
 
