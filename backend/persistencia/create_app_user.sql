@@ -9,7 +9,7 @@
 -- Create the user (MySQL 5.7+ / MariaDB 10.2+)
 -- Use 'proptech_ro'@'localhost' for local-only; use 'proptech_ro'@'%' for remote (e.g. Docker).
 CREATE USER IF NOT EXISTS 'proptech_ro'@'%'
-  IDENTIFIED BY 'YOUR_STRONG_PASSWORD';
+  IDENTIFIED BY 'your_app_password';
 
 -- Grant only SELECT on propiedades (read and search)
 GRANT SELECT ON inmobiliaria.propiedades TO 'proptech_ro'@'%';
