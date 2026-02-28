@@ -1,4 +1,3 @@
-# Backend Dockerfile - to be implemented
 FROM python:3.12-slim
 WORKDIR /app
 COPY requirements.txt .
