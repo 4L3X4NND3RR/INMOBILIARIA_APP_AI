@@ -12,8 +12,8 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 MYSQL_HOST = os.getenv("MYSQL_HOST", "localhost")
 MYSQL_PORT = os.getenv("MYSQL_PORT", "3306")
 MYSQL_DATABASE = os.environ["MYSQL_DATABASE"]
-MYSQL_USER = os.environ["MYSQL_USER"]
-MYSQL_PASSWORD = os.environ["MYSQL_PASSWORD"]
+MYSQL_USER = os.environ["APP_MYSQL_USER"]
+MYSQL_PASSWORD = os.environ["APP_MYSQL_PASSWORD"]
 
 DATABASE_URL = (
     f"mysql+aiomysql://{MYSQL_USER}:{MYSQL_PASSWORD}"

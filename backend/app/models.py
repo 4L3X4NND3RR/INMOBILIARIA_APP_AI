@@ -9,7 +9,7 @@ from decimal import Decimal
 from typing import Optional
 
 from pydantic import BaseModel, Field
-from sqlalchemy import Date, Decimal as SQLDecimal, Integer, String, Text
+from sqlalchemy import Date, Integer, Numeric, String, Text
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 # --- SQLAlchemy Base & ORM Model ---
@@ -35,10 +35,10 @@ class Propiedad(Base):
     tipo: Mapped[str] = mapped_column(
         String(64), nullable=False
     )  # casa, departamento, terreno, etc.
-    precio: Mapped[Decimal] = mapped_column(SQLDecimal(14, 2), nullable=False)
+    precio: Mapped[Decimal] = mapped_column(Numeric(14, 2), nullable=False)
     habitaciones: Mapped[int] = mapped_column(Integer, nullable=True)
     banos: Mapped[int] = mapped_column(Integer, nullable=True)
-    area_m2: Mapped[Optional[Decimal]] = mapped_column(SQLDecimal(10, 2), nullable=True)
+    area_m2: Mapped[Optional[Decimal]] = mapped_column(Numeric(10, 2), nullable=True)
     ubicacion: Mapped[str] = mapped_column(String(255), nullable=True)
     fecha_publicacion: Mapped[Optional[date]] = mapped_column(Date, nullable=True)
 
